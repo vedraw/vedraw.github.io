@@ -4,7 +4,7 @@ Go makes concurrent programming simple, powerful, and efficient. Here are three 
 
 ---
 
-## 🚀 1. Goroutines
+## 1. Goroutines
 
 Goroutines are lightweight threads managed by the Go runtime. You start one using the `go` keyword:
 
@@ -29,7 +29,7 @@ func main() {
 
 ---
 
-## 🔁 2. Channels
+## 2. Channels
 
 Channels allow goroutines to communicate safely:
 
@@ -52,7 +52,7 @@ func main() {
 
 ---
 
-## 🔒 3. WaitGroups
+## 3. WaitGroups
 
 Use `sync.WaitGroup` to wait for multiple goroutines to complete:
 
@@ -85,7 +85,7 @@ func main() {
 
 ---
 
-## ✅ Summary
+## Summary
 
 | Method        | Use Case                                   | Pros                          |
 |---------------|--------------------------------------------|-------------------------------|
