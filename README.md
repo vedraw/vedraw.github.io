@@ -5,6 +5,4 @@ This is my personal portfolio site hosted via **GitHub Pages**.
 # 🚀 Visit here
 👉 [https://vedraw.github.io](https://vedraw.github.io)
 
----
-
-Made with ❤️ by Vedika Rathi
+-----
