@@ -68,20 +68,32 @@ function canPlace(existing, word, x, y, dir) {
   for (let i = 0; i < word.length; i++) {
     const cx = dir === 'H' ? x + i : x;
     const cy = dir === 'V' ? y + i : y;
+    let conflict = false;
 
     for (let e of existing) {
       for (let j = 0; j < e.word.length; j++) {
         const ex = e.dir === 'H' ? e.x + j : e.x;
         const ey = e.dir === 'V' ? e.y + j : e.y;
 
+        // Intersection
         if (cx === ex && cy === ey) {
           if (word[i] !== e.word[j]) return false;
         }
+
+        // Check surrounding cells for adjacency (even diagonals)
+        if (Math.abs(cx - ex) <= 1 && Math.abs(cy - ey) <= 1) {
+          if (cx === ex && cy === ey) continue; // Skip legit intersections
+          conflict = true;
+        }
       }
     }
+
+    if (conflict) return false;
   }
+
   return true;
 }
+
 
 function placeWord(existing, word) {
   const placements = [];
