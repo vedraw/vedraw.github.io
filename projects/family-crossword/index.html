@@ -9,9 +9,14 @@
 <body>
   <div class="container">
     <h1>🧩 Family Crossword Generator</h1>
-    <p>Enter names (comma-separated):</p>
-    <input type="text" id="nameInput" placeholder="e.g. Vedika, Rathi, Amit, Sunita" />
-    <button onclick="generateCrossword()">Generate Crossword</button>
+
+    <input type="text" id="nameInput" placeholder="Type a name and press Enter" />
+    <div id="nameList"></div>
+
+    <div class="button-group">
+      <button onclick="generateCrossword()">Generate Crossword</button>
+      <button onclick="shuffleCrossword()">🔁 Shuffle Layout</button>
+    </div>
 
     <div id="grid" class="grid"></div>
   </div>
@@ -19,4 +24,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
