@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         enteredNames.push(name);
         updateNameList();
       }
+      // nameInput.value = "";
       nameInput.value = "";
     }
   });
