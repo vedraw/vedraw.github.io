@@ -115,7 +115,7 @@
   <script>
     const input = document.getElementById('wordInput');
     const tagInput = document.getElementById('tagInput');
-    const words = [];
+    let words = [];
 
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Enter') {
@@ -136,8 +136,7 @@
     }
 
     function removeTag(word) {
-      const index = words.indexOf(word);
-      if (index > -1) words.splice(index, 1);
+      words = words.filter(w => w !== word);
       renderTags();
     }
 
@@ -147,79 +146,59 @@
       words.forEach(addTag);
     }
 
-    function generateBoardLayout(wordList) {
-    const grid = Array.from({ length: 30 }, () => Array(30).fill(''));
-    const center = 15;
-  
-    const placedWords = new Set();
-    const first = wordList[0];
-    placedWords.add(first);
-    for (let i = 0; i < first.length; i++) {
-      grid[center][center - Math.floor(first.length / 2) + i] = first[i];
-    }
-  
-    for (let w = 1; w < wordList.length; w++) {
-      const word = wordList[w];
-      if (placedWords.has(word)) continue; // 🛑 Skip duplicates
-  
-      let placed = false;
-  
-      outer:
-      for (let r = 0; r < 30; r++) {
-        for (let c = 0; c < 30; c++) {
-          for (let wi = 0; wi < word.length; wi++) {
-            if (grid[r][c] === word[wi]) {
-              const startRow = r - wi;
-              const startCol = c - wi;
-  
-              // Try vertical
-              if (startRow >= 0 && startRow + word.length <= 30) {
-                let fits = true;
-                for (let k = 0; k < word.length; k++) {
-                  const cell = grid[startRow + k][c];
-                  if (cell !== '' && cell !== word[k]) {
-                    fits = false;
-                    break;
-                  }
-                }
-                if (fits) {
-                  for (let k = 0; k < word.length; k++) {
-                    grid[startRow + k][c] = word[k];
-                  }
-                  placed = true;
-                  placedWords.add(word);
-                  break outer;
-                }
-              }
-  
-              // Try horizontal
-              if (startCol >= 0 && startCol + word.length <= 30) {
-                let fits = true;
-                for (let k = 0; k < word.length; k++) {
-                  const cell = grid[r][startCol + k];
-                  if (cell !== '' && cell !== word[k]) {
-                    fits = false;
-                    break;
-                  }
-                }
-                if (fits) {
-                  for (let k = 0; k < word.length; k++) {
-                    grid[r][startCol + k] = word[k];
-                  }
-                  placed = true;
-                  placedWords.add(word);
-                  break outer;
-                }
+    function generateBoardLayoutBacktracking(wordList) {
+      const size = 31;
+      const center = Math.floor(size / 2);
+      const board = Array.from({ length: size }, () => Array(size).fill(''));
+
+      function canPlace(word, r, c, dir) {
+        for (let i = 0; i < word.length; i++) {
+          const rr = dir === 'H' ? r : r + i;
+          const cc = dir === 'H' ? c + i : c;
+          if (rr < 0 || cc < 0 || rr >= size || cc >= size) return false;
+          const existing = board[rr][cc];
+          if (existing !== '' && existing !== word[i]) return false;
+        }
+        return true;
+      }
+
+      function placeWord(word, r, c, dir) {
+        for (let i = 0; i < word.length; i++) {
+          const rr = dir === 'H' ? r : r + i;
+          const cc = dir === 'H' ? c + i : c;
+          board[rr][cc] = word[i];
+        }
+      }
+
+      function unplaceWord(word, r, c, dir) {
+        for (let i = 0; i < word.length; i++) {
+          const rr = dir === 'H' ? r : r + i;
+          const cc = dir === 'H' ? c + i : c;
+          board[rr][cc] = '';
+        }
+      }
+
+      function solve(index) {
+        if (index === wordList.length) return true;
+        const word = wordList[index];
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            for (const dir of ['H', 'V']) {
+              if (canPlace(word, r, c, dir)) {
+                placeWord(word, r, c, dir);
+                if (solve(index + 1)) return true;
+                unplaceWord(word, r, c, dir);
               }
             }
           }
         }
+        return false;
       }
-    }
-  
-    return grid;
-  }
 
+      placeWord(wordList[0], center, center - Math.floor(wordList[0].length / 2), 'H');
+      solve(1);
+      return board;
+    }
 
     function drawBoard(grid) {
       const board = document.getElementById('board');
@@ -238,16 +217,15 @@
     }
 
     function generate() {
-      const grid = generateBoardLayout(words);
+      const grid = generateBoardLayoutBacktracking(words);
       drawBoard(grid);
     }
 
     function shuffle() {
       const shuffled = [...words].sort(() => Math.random() - 0.5);
-      const grid = generateBoardLayout(shuffled);
+      const grid = generateBoardLayoutBacktracking(shuffled);
       drawBoard(grid);
     }
   </script>
 </body>
 </html>
-
