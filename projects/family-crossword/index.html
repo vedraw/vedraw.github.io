@@ -68,31 +68,48 @@ function canPlace(existing, word, x, y, dir) {
   for (let i = 0; i < word.length; i++) {
     const cx = dir === 'H' ? x + i : x;
     const cy = dir === 'V' ? y + i : y;
-    let conflict = false;
+    let hasIntersection = false;
 
     for (let e of existing) {
       for (let j = 0; j < e.word.length; j++) {
         const ex = e.dir === 'H' ? e.x + j : e.x;
         const ey = e.dir === 'V' ? e.y + j : e.y;
 
-        // Intersection
+        // Same position = potential intersection
         if (cx === ex && cy === ey) {
-          if (word[i] !== e.word[j]) return false;
-        }
-
-        // Check surrounding cells for adjacency (even diagonals)
-        if (Math.abs(cx - ex) <= 1 && Math.abs(cy - ey) <= 1) {
-          if (cx === ex && cy === ey) continue; // Skip legit intersections
-          conflict = true;
+          if (word[i] === e.word[j]) {
+            hasIntersection = true;
+          } else {
+            return false; // conflict at same cell
+          }
         }
       }
     }
 
-    if (conflict) return false;
+    // If this cell is NOT intersecting with anything, check its 8 neighbors
+    if (!hasIntersection) {
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          if (dx === 0 && dy === 0) continue; // skip self
+          const nx = cx + dx;
+          const ny = cy + dy;
+          for (let e of existing) {
+            for (let j = 0; j < e.word.length; j++) {
+              const ex = e.dir === 'H' ? e.x + j : e.x;
+              const ey = e.dir === 'V' ? e.y + j : e.y;
+              if (nx === ex && ny === ey) {
+                return false; // touches another word — invalid
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   return true;
 }
+
 
 
 function placeWord(existing, word) {
