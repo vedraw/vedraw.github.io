@@ -23,19 +23,39 @@ input {
   border: 1px solid #ccc;
 }
 
-button {
+#nameList {
+  margin: 15px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.name-tag {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.button-group {
   margin-top: 10px;
+}
+
+button {
+  margin: 5px;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
   border-radius: 6px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #218838;
 }
 
 .grid {
