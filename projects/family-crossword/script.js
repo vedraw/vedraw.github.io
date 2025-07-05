@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         enteredNames.push(name);
         updateNameList();
       }
-      // nameInput.value = "";
       nameInput.value = "";
     }
   });
@@ -40,7 +39,6 @@ function placeFirstWord(board, word) {
   for (let i = 0; i < word.length; i++) {
     board[row][col + i] = word[i];
   }
-  return { orientation: 'H', row, col };
 }
 
 function findAllIntersections(board, word) {
@@ -48,21 +46,4 @@ function findAllIntersections(board, word) {
   for (let r = 0; r < gridSize; r++) {
     for (let c = 0; c < gridSize; c++) {
       const boardChar = board[r][c];
-      if (boardChar === emptyChar) continue;
-
-      for (let wi = 0; wi < word.length; wi++) {
-        if (word[wi] !== boardChar) continue;
-
-        // Try vertical
-        const startRow = r - wi;
-        if (startRow >= 0 && startRow + word.length <= gridSize) {
-          let canPlace = true;
-          for (let k = 0; k < word.length; k++) {
-            const cell = board[startRow + k][c];
-            if (cell !== emptyChar && cell !== word[k]) {
-              canPlace = false;
-              break;
-            }
-          }
-          if (canPlace) {
-            placements.push({ word, orientation: 'V', row: start
+      if (boardChar ===
