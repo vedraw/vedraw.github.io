@@ -1,163 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Crossword Name Generator</title>
+  <title>Node Crossword Generator</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
-    textarea { width: 300px; height: 80px; }
-    button { margin-top: 10px; padding: 10px 15px; }
-    #crossword {
-      display: grid;
-      margin-top: 20px;
-      gap: 1px;
-      border: 1px solid #000;
-    }
+    textarea { width: 300px; height: 60px; }
+    button { padding: 8px 12px; margin-top: 10px; }
+    .grid { display: grid; margin-top: 20px; gap: 1px; }
     .cell {
-      width: 28px;
-      height: 28px;
+      width: 24px; height: 24px;
+      text-align: center; font-weight: bold;
       border: 1px solid #ccc;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      background: #fff;
+      background: white;
     }
   </style>
 </head>
 <body>
   <h2>Crossword Name Generator</h2>
-  <p>Enter comma-separated names:</p>
-  <textarea id="nameInput">Alice,Bob,Charlie,David</textarea><br>
-  <button onclick="generateCrossword()">Generate</button>
-  <button onclick="showNext()">Regenerate</button>
+  <textarea id="names" placeholder="Enter names like: Alice,Bob,Charlie"></textarea><br>
+  <button onclick="generate()">Generate</button>
+  <button onclick="next()">Regenerate</button>
 
-  <div id="crossword"></div>
+  <div id="crossword" class="grid"></div>
 
   <script>
-    let allGrids = [];
-    let currentIndex = 0;
+    let layouts = [], index = 0;
 
-    function generateCrossword() {
-      const input = document.getElementById("nameInput").value;
-      const names = input.split(",").map(name => name.trim().toUpperCase()).filter(Boolean);
-      if (names.length < 2) {
-        alert("Please enter at least 2 names.");
+    async function generate() {
+      const names = document.getElementById('names').value.split(',');
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names })
+      });
+      const data = await res.json();
+      if (!Array.isArray(data) || !data.length) {
+        alert("No valid layouts found.");
         return;
       }
-
-      allGrids = generateAllGrids(names);
-      currentIndex = 0;
-
-      if (allGrids.length === 0) {
-        document.getElementById("crossword").innerHTML = "❌ No valid layouts found.";
-      } else {
-        renderGrid(allGrids[currentIndex]);
-      }
+      layouts = data;
+      index = 0;
+      render();
     }
 
-    function showNext() {
-      if (!allGrids.length) return;
-      currentIndex = (currentIndex + 1) % allGrids.length;
-      renderGrid(allGrids[currentIndex]);
+    function next() {
+      if (!layouts.length) return;
+      index = (index + 1) % layouts.length;
+      render();
     }
 
-    function renderGrid(grid) {
-      const container = document.getElementById("crossword");
-      container.innerHTML = "";
-      container.style.gridTemplateColumns = `repeat(${grid[0].length}, 28px)`;
-
+    function render() {
+      const grid = layouts[index];
+      const container = document.getElementById('crossword');
+      container.innerHTML = '';
+      container.style.gridTemplateColumns = `repeat(${grid[0].length}, 24px)`;
       for (let row of grid) {
-        for (let cell of row) {
-          const div = document.createElement("div");
-          div.className = "cell";
-          div.textContent = cell || "";
+        for (let char of row) {
+          const div = document.createElement('div');
+          div.className = 'cell';
+          div.textContent = char === ' ' ? '' : char;
           container.appendChild(div);
         }
       }
-    }
-
-    function generateAllGrids(words) {
-      const permutations = permute(words);
-      const results = [];
-      for (let perm of permutations) {
-        const grid = buildGrid(perm);
-        if (grid) results.push(grid);
-      }
-      return results;
-    }
-
-    function buildGrid(words) {
-      const size = 20;
-      const grid = Array(size).fill(0).map(() => Array(size).fill(""));
-
-      // Place first word horizontally in middle
-      const first = words[0];
-      const startX = Math.floor((size - first.length) / 2);
-      const midY = Math.floor(size / 2);
-      for (let i = 0; i < first.length; i++) grid[midY][startX + i] = first[i];
-
-      for (let w = 1; w < words.length; w++) {
-        const word = words[w];
-        let placed = false;
-
-        for (let i = 0; i < word.length && !placed; i++) {
-          for (let y = 0; y < size && !placed; y++) {
-            for (let x = 0; x < size && !placed; x++) {
-              const gridChar = grid[y][x];
-              if (gridChar === word[i]) {
-                // Try vertical
-                const top = y - i;
-                if (top >= 0 && top + word.length <= size) {
-                  let canPlace = true;
-                  for (let j = 0; j < word.length; j++) {
-                    const ch = grid[top + j][x];
-                    if (ch && ch !== word[j]) canPlace = false;
-                  }
-                  if (canPlace) {
-                    for (let j = 0; j < word.length; j++) {
-                      grid[top + j][x] = word[j];
-                    }
-                    placed = true;
-                  }
-                }
-
-                // Try horizontal
-                const left = x - i;
-                if (left >= 0 && left + word.length <= size) {
-                  let canPlace = true;
-                  for (let j = 0; j < word.length; j++) {
-                    const ch = grid[y][left + j];
-                    if (ch && ch !== word[j]) canPlace = false;
-                  }
-                  if (canPlace) {
-                    for (let j = 0; j < word.length; j++) {
-                      grid[y][left + j] = word[j];
-                    }
-                    placed = true;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        if (!placed) return null; // Cannot place word
-      }
-
-      return grid;
-    }
-
-    function permute(arr) {
-      if (arr.length <= 1) return [arr];
-      const res = [];
-      for (let i = 0; i < arr.length; i++) {
-        const current = arr[i];
-        const remaining = [...arr.slice(0, i), ...arr.slice(i + 1)];
-        for (let p of permute(remaining)) {
-          res.push([current, ...p]);
-        }
-      }
-      return res;
     }
   </script>
 </body>
