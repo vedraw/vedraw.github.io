@@ -1,16 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Vedika | Portfolio</title>
   <style>
-     .project {
-        padding: 16px;
-        margin-bottom: 20px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-      }
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f9f9f9;
@@ -20,44 +13,99 @@
       padding: 40px 20px;
       line-height: 1.6;
     }
-    h1, h2 {
+
+    h1, h2, h3 {
       color: #2c3e50;
     }
+
     a {
       color: #007bff;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
+
     a:hover {
+      color: #0056b3;
       text-decoration: underline;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 2px solid #ddd;
+    }
+
+    .project {
+      padding: 16px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .footer-links {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .footer-links a {
+      margin: 0 10px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 15px;
+      }
+
+      .project {
+        padding: 12px;
+      }
+
+      .footer-links a {
+        display: block;
+        margin: 8px 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div style="text-align: center; margin-bottom: 30px;">
-    <img src="your-photo.jpg" alt="Vedika" style="width: 100px; border-radius: 50%;" />
+  <div class="profile">
     <h1>Vedika Rathi</h1>
     <p>I build scalable, secure systems.</p>
   </div>
 
-  <h2>🔧 Projects</h2>
+  <h2>Projects</h2>
   <div class="project">
-    <h3><a href="https://vedraw.github.io/crossword_generator/" target="_blank">Family Crossword Game</a></h3>
-    <p>Create crossword-style layouts from family names.</p>
+    <h3><a Family Crossword Game</a></h3>
+        [<a href="https://github.com/vedraw/crossword_generator" target="_blank">Source</a>]</h3>
+    <p>Create crossword-style layouts from family names with navigation and export options.</p>
   </div>
 
- 
-  
-  <h3>Articles</h3>
+  <h2>📝 Articles</h2>
   <ul>
     <li><a href="golang-concurrency.md">Understanding Concurrency in Golang</a></li>
   </ul>
 
-  <p><strong>Connect with me:</strong>
+  <div class="footer-links">
+    <strong>Connect with me:</strong><br />
     <a href="https://www.linkedin.com/in/vedika-rathi-40b795160/" target="_blank">LinkedIn</a> |
     <a href="https://leetcode.com/u/Vedrat/" target="_blank">LeetCode</a> |
     <a href="https://github.com/vedraw" target="_blank">GitHub</a>
-  </p>
+  </div>
 
 </body>
 </html>
