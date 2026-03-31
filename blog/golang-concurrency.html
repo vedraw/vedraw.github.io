@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concurrency in Golang: 3 Ways</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      color: #222;
+      max-width: 800px;
+      margin: auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 22px 0;
+    }
+
+    pre {
+      background: #0b1020;
+      color: #e6edf3;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      border: 1px solid #1f2a44;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f7f9fc;
+      color: #2c3e50;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .back-link {
+      margin-top: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Concurrency in Golang: 3 Ways</h1>
+    <p>Go makes concurrent programming simple, powerful, and efficient. Here are three main ways to handle concurrency in Go:</p>
+
+    <hr />
+
+    <h2>1. Goroutines</h2>
+    <p>Goroutines are lightweight threads managed by the Go runtime. You start one using the <code>go</code> keyword:</p>
+    <pre><code>package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func sayHello() {
+	fmt.Println("Hello from goroutine!")
+}
+
+func main() {
+	go sayHello()
+	time.Sleep(1 * time.Second)
+	fmt.Println("Main function done.")
+}</code></pre>
+
+    <hr />
+
+    <h2>2. Channels</h2>
+    <p>Channels allow goroutines to communicate safely:</p>
+    <pre><code>package main
+
+import "fmt"
+
+func sum(a, b int, ch chan int) {
+	ch &lt;- a + b
+}
+
+func main() {
+	ch := make(chan int)
+	go sum(3, 4, ch)
+	result := &lt;-ch
+	fmt.Println("Sum:", result)
+}</code></pre>
+
+    <hr />
+
+    <h2>3. WaitGroups</h2>
+    <p>Use <code>sync.WaitGroup</code> to wait for multiple goroutines to complete:</p>
+    <pre><code>package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func worker(id int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	fmt.Printf("Worker %d starting\n", id)
+	fmt.Printf("Worker %d done\n", id)
+}
+
+func main() {
+	var wg sync.WaitGroup
+
+	for i := 1; i &lt;= 3; i++ {
+		wg.Add(1)
+		go worker(i, &amp;wg)
+	}
+
+	wg.Wait()
+	fmt.Println("All workers done")
+}</code></pre>
+
+    <hr />
+
+    <h2>Summary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Use Case</th>
+          <th>Pros</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>goroutines</code></td>
+          <td>Basic concurrent tasks</td>
+          <td>Simple, lightweight</td>
+        </tr>
+        <tr>
+          <td><code>channels</code></td>
+          <td>Communicate between goroutines</td>
+          <td>Type-safe, coordinated</td>
+        </tr>
+        <tr>
+          <td><code>WaitGroup</code></td>
+          <td>Wait for multiple tasks to finish</td>
+          <td>Clean synchronization</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="back-link">
+      <a href="../index.html">&larr; Back to Home</a>
+    </div>
+  </main>
+</body>
+</html>
+
