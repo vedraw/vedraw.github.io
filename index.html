@@ -173,72 +173,47 @@
         </p>
 
         <div class="project-details">
-          <h4>Project Overview</h4>
+          <h4>Project Overview: Autonomous Research & Chat Agent</h4>
           <p>
-            This project moves beyond a standard "wrapper" by implementing a Reasoning and Acting (ReAct) logic.
-            Instead of just replying to a prompt, the system evaluates if it has enough information to answer.
-            If not, it autonomously invokes a search tool, parses the results, and synthesizes a grounded response.
-          </p>
-
-          <h4>Technical Stack</h4>
-          <p>
-            <strong>Orchestration:</strong> n8n (Low-code workflow engineering)<br />
-            <strong>LLM Engine:</strong> OpenAI GPT-4o / GPT-3.5 (Reasoning layer)<br />
-            <strong>External Capabilities:</strong> SerpAPI (Real-time Google Search integration)<br />
-            <strong>State Management:</strong> Simple Window Memory (Maintaining conversational context)<br />
-            <strong>Architecture:</strong> Agentic Workflow / Tool-Augmented Generation
-          </p>
-
-          <h4>Key Engineering Highlights</h4>
-          <p>
-            <strong>Tool Dispatching:</strong> Configured the agent to handle unstructured queries by determining tool necessity on-the-fly.<br />
-            <strong>Context Persistence:</strong> Integrated memory buffers to allow the agent to handle follow-up questions (e.g., "What about the weather there tomorrow?").<br />
-            <strong>API Management:</strong> Managed API credit usage and response parsing to ensure high-speed, cost-effective data retrieval.
+            This project features a low-code automation workflow designed to handle real-time user inquiries by leveraging an Autonomous AI Agent.
+            Unlike a standard LLM restricted by knowledge cutoffs, this agent is equipped with "senses" - specifically a search tool -
+            allowing it to fetch live information (weather, news, technical docs) while maintaining a coherent dialogue through persistent memory.
           </p>
 
           <img src="n8n_flow.png" alt="n8n AI Agent Workflow" class="project-image" />
           <br />
-          <h4>Project Overview: Autonomous Search & Chat Agent</h4>
+          <img src="n8n_flow2.png" alt="n8n AI Agent Workflow (detail)" class="project-image" />
+          <br />
+
+          <h4>The Architecture (How it Works)</h4>
           <p>
-            This project features a low-code automation workflow designed to handle real-time user inquiries by leveraging an Autonomous AI Agent.
-            Unlike a standard LLM that relies solely on its training data, this agent is equipped with "senses"—specifically a search tool—allowing it to fetch live information
-            (like current events, weather, or technical documentation) and maintain a coherent conversation through persistent memory.
+            <strong>Trigger:</strong> A Chat node listens for incoming messages from a user interface.<br />
+            <strong>The Brain (Reasoning):</strong> Powered by OpenAI (GPT-4o/3.5), the agent node acts as a central controller.
+            It decides whether to answer immediately or dispatch a tool for more data.<br />
+            <strong>Augmentation (Research & Context):</strong><br />
+            <strong>SerpAPI:</strong> Enables real-time Google Search integration to ground answers in current facts.<br />
+            <strong>Simple Window Memory:</strong> Ensures context persistence, allowing for multi-turn conversations and follow-up questions.<br />
+            <strong>Output:</strong> A synthesized, researched response delivered back to the user.
           </p>
 
-          <h4>The Workflow Summarized</h4>
+          <h4>Technical Stack & Engineering Highlights</h4>
           <p>
-            <strong>Trigger (Entry Point):</strong> The workflow initiates via a Chat Trigger node, which listens for incoming messages from a user interface.<br />
-            <strong>Processing (The Brain):</strong> The AI Agent node acts as the central controller. It receives the user's prompt and decides whether it can answer immediately
-            or if it needs to use a "tool" to find more information.<br />
-            <strong>Augmentation (Tools & Context):</strong><br />
-            <strong>Reasoning:</strong> Powered by OpenAI, providing the logic and natural language understanding.<br />
-            <strong>Research:</strong> Utilizing SerpAPI, the agent can perform Google searches in real-time to ground its answers in factual, current data.<br />
-            <strong>Context:</strong> The Simple Memory node ensures the agent remembers previous parts of the conversation, enabling multi-turn dialogue.<br />
-            <strong>Output:</strong> The refined, researched answer is sent back to the user through the chat interface.
+            <strong>Orchestration:</strong> n8n (Workflow Engineering)<br />
+            <strong>Logic Model:</strong> ReAct (Reasoning + Acting) framework.
           </p>
 
-          <h4>Technologies Used</h4>
+          <h4>Key Engineering</h4>
           <p>
-            <strong>n8n:</strong> An open-source workflow automation tool used to orchestrate the logic and connectivity between different services.<br />
-            <strong>OpenAI GPT (Chat Model):</strong> The Large Language Model (LLM) serving as the core reasoning engine for the agent.<br />
-            <strong>SerpAPI:</strong> A real-time Google Search API that allows the agent to bypass its knowledge cutoff by "googling" answers.<br />
-            <strong>LangChain Concepts:</strong> The architecture utilizes LangChain principles (Memory, Tools, and Agents) implemented within the n8n ecosystem.
+            <strong>Tool Dispatching:</strong> Configured the agent to handle unstructured queries by determining tool necessity on-the-fly.<br />
+            <strong>API Management:</strong> Managed API credit usage and response parsing to ensure high-speed, cost-effective data retrieval.<br />
+            <strong>LangChain Concepts:</strong> Implemented Agent/Tool/Memory patterns within a visual automation ecosystem.
           </p>
 
-          <h4>Use Cases</h4>
+          <h4>Real-World Impact & Use Cases</h4>
           <p>
-            <strong>Current Use Cases</strong><br />
-            - Real-Time Information Retrieval: Asking for live data such as weather in Bangalore, stock prices, or breaking news.<br />
-            - Technical Support Assistant: Bridging the gap between user queries and live documentation or Stack Overflow via search.<br />
-            - Personal Research Bot: Summarizing search results for complex topics into a concise chat response.<br />
-          </p>
-
-          <h4>Future Enhancements & Scalability</h4>
-          <p>
-            <strong>Vector Database Integration:</strong> Connect a database like Pinecone or Milvus to allow the agent to perform RAG (Retrieval-Augmented Generation) on your own private PDFs or codebase.<br />
-            <strong>Multi-Channel Deployment:</strong> Extend the trigger to include Slack, Discord, or WhatsApp so the agent is accessible where you already work.<br />
-            <strong>Specialized Tooling:</strong> Add a Python Code Exec node to allow the agent to perform complex mathematical calculations or data visualization on the fly.<br />
-            <strong>Error Handling & Logging:</strong> Implement a sub-workflow to log agent "hallucinations" or failed API calls to a Google Sheet for performance monitoring.
+            <strong>Live Data Retrieval:</strong> Fetching real-time updates like weather in Bengaluru or stock fluctuations.<br />
+            <strong>Technical Support:</strong> Bridging user queries with live documentation or Stack Overflow via automated search.<br />
+            <strong>Personal Research:</strong> Summarizing complex search results into concise, actionable chat responses.
           </p>
         </div>
       </li>
