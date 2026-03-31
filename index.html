@@ -101,10 +101,12 @@
       margin-top: 14px;
       margin-bottom: 6px;
       color: #2c3e50;
+      font-size: 18px;
     }
 
     .project-details p {
       margin: 6px 0;
+      color: #555;
     }
 
     .project-details details {
@@ -113,13 +115,34 @@
 
     .project-details details summary {
       cursor: pointer;
-      font-weight: bold;
-      color: #2c3e50;
-      background: #f7f9fc;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 10px 12px;
+      font-weight: normal;
+      color: #007bff;
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
       user-select: none;
+      display: inline;
+      text-decoration: none;
+    }
+
+    .project-details details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .project-details details summary::marker {
+      content: "";
+    }
+
+    .project-details details summary:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .project-details p strong {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #2c3e50;
     }
 
     .footer-links a {
@@ -170,7 +193,7 @@
   <h3>Articles</h3>
     <ul class="list">
       <li>
-        <a href="golang-concurrency.md">Understanding Concurrency in Golang</a>
+        <a href="blog/golang-concurrency.md">Understanding Concurrency in Golang</a>
       </li>
       <li>
         <a href="https://medium.com/@vedraw/app-version-management-a-low-level-design-approach-ff7d3db8b5f3" target="_blank">
