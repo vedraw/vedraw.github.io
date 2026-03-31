@@ -107,6 +107,21 @@
       margin: 6px 0;
     }
 
+    .project-details details {
+      margin-top: 12px;
+    }
+
+    .project-details details summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #2c3e50;
+      background: #f7f9fc;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px 12px;
+      user-select: none;
+    }
+
     .footer-links a {
       margin: 0 10px;
       display: inline-block;
@@ -162,6 +177,11 @@
           App Version Management: A Low-Level Design Approach
         </a>
       </li>
+      <li>
+        <a href="https://medium.com/@vedraw/the-sleeping-barber-problem-a-tale-of-resource-allocation-df7f4e47afa0" target="_blank">
+          The Sleeping Barber Problem: A Tale of Resource Allocation
+        </a>
+      </li>
     </ul>
 
     <h3>Projects</h3>
@@ -169,52 +189,65 @@
       <li>
         <p>
           <strong>Autonomous Search & Chat Agent</strong> —
-          <a href="https://github.com/vedraw/n8n-serpAPI-details.html" target="_blank">Deep Dive</a>
+          <!-- <a href="https://github.com/vedraw/n8n-serpAPI-details.html" target="_blank">Deep Dive</a> -->
         </p>
 
         <div class="project-details">
-          <h4>Project Overview: Autonomous Research & Chat Agent</h4>
-          <p>
-            This project features a low-code automation workflow designed to handle real-time user inquiries by leveraging an Autonomous AI Agent.
-            Unlike a standard LLM restricted by knowledge cutoffs, this agent is equipped with "senses" - specifically a search tool -
-            allowing it to fetch live information (weather, news, technical docs) while maintaining a coherent dialogue through persistent memory.
-          </p>
-
           <img src="n8n_flow.png" alt="n8n AI Agent Workflow" class="project-image" />
           <br />
           <img src="n8n_flow2.png" alt="n8n AI Agent Workflow (detail)" class="project-image" />
           <br />
 
-          <h4>The Architecture (How it Works)</h4>
+          <h4>Technologies Used</h4>
           <p>
-            <strong>Trigger:</strong> A Chat node listens for incoming messages from a user interface.<br />
-            <strong>The Brain (Reasoning):</strong> Powered by OpenAI (GPT-4o/3.5), the agent node acts as a central controller.
-            It decides whether to answer immediately or dispatch a tool for more data.<br />
-            <strong>Augmentation (Research & Context):</strong><br />
-            <strong>SerpAPI:</strong> Enables real-time Google Search integration to ground answers in current facts.<br />
-            <strong>Simple Window Memory:</strong> Ensures context persistence, allowing for multi-turn conversations and follow-up questions.<br />
-            <strong>Output:</strong> A synthesized, researched response delivered back to the user.
+            <strong>Orchestration:</strong> n8n<br />
+            <strong>LLM Engine:</strong> OpenAI GPT-4o / GPT-3.5<br />
+            <strong>Research Tool:</strong> SerpAPI (Google Search)<br />
+            <strong>State Management:</strong> Simple Window Memory<br />
+            <strong>Framework/Concepts:</strong> ReAct + LangChain-style Agent/Tool/Memory patterns
           </p>
 
-          <h4>Technical Stack & Engineering Highlights</h4>
-          <p>
-            <strong>Orchestration:</strong> n8n (Workflow Engineering)<br />
-            <strong>Logic Model:</strong> ReAct (Reasoning + Acting) framework.
-          </p>
+          <details class="deep-dive">
+            <summary>Deep Dive</summary>
 
-          <h4>Key Engineering</h4>
-          <p>
-            <strong>Tool Dispatching:</strong> Configured the agent to handle unstructured queries by determining tool necessity on-the-fly.<br />
-            <strong>API Management:</strong> Managed API credit usage and response parsing to ensure high-speed, cost-effective data retrieval.<br />
-            <strong>LangChain Concepts:</strong> Implemented Agent/Tool/Memory patterns within a visual automation ecosystem.
-          </p>
+            <h4>Project Overview: Autonomous Research & Chat Agent</h4>
+            <p>
+              This project features a low-code automation workflow designed to handle real-time user inquiries by leveraging an Autonomous AI Agent.
+              Unlike a standard LLM restricted by knowledge cutoffs, this agent is equipped with "senses" - specifically a search tool -
+              allowing it to fetch live information (weather, news, technical docs) while maintaining a coherent dialogue through persistent memory.
+            </p>
 
-          <h4>Real-World Impact & Use Cases</h4>
-          <p>
-            <strong>Live Data Retrieval:</strong> Fetching real-time updates like weather in Bengaluru or stock fluctuations.<br />
-            <strong>Technical Support:</strong> Bridging user queries with live documentation or Stack Overflow via automated search.<br />
-            <strong>Personal Research:</strong> Summarizing complex search results into concise, actionable chat responses.
-          </p>
+            <h4>The Architecture (How it Works)</h4>
+            <p>
+              <strong>Trigger:</strong> A Chat node listens for incoming messages from a user interface.<br />
+              <strong>The Brain (Reasoning):</strong> Powered by OpenAI (GPT-4o/3.5), the agent node acts as a central controller.
+              It decides whether to answer immediately or dispatch a tool for more data.<br />
+              <strong>Augmentation (Research & Context):</strong><br />
+              <strong>SerpAPI:</strong> Enables real-time Google Search integration to ground answers in current facts.<br />
+              <strong>Simple Window Memory:</strong> Ensures context persistence, allowing for multi-turn conversations and follow-up questions.<br />
+              <strong>Output:</strong> A synthesized, researched response delivered back to the user.
+            </p>
+
+            <h4>Technical Stack & Engineering Highlights</h4>
+            <p>
+              <strong>Orchestration:</strong> n8n (Workflow Engineering)<br />
+              <strong>Logic Model:</strong> ReAct (Reasoning + Acting) framework.
+            </p>
+
+            <h4>Key Engineering</h4>
+            <p>
+              <strong>Tool Dispatching:</strong> Configured the agent to handle unstructured queries by determining tool necessity on-the-fly.<br />
+              <strong>API Management:</strong> Managed API credit usage and response parsing to ensure high-speed, cost-effective data retrieval.<br />
+              <strong>LangChain Concepts:</strong> Implemented Agent/Tool/Memory patterns within a visual automation ecosystem.
+            </p>
+
+            <h4>Real-World Impact & Use Cases</h4>
+            <p>
+              <strong>Live Data Retrieval:</strong> Fetching real-time updates like weather in Bengaluru or stock fluctuations.<br />
+              <strong>Technical Support:</strong> Bridging user queries with live documentation or Stack Overflow via automated search.<br />
+              <strong>Personal Research:</strong> Summarizing complex search results into concise, actionable chat responses.
+            </p>
+          </details>
         </div>
       </li>
     </ul>
