@@ -1,0 +1,39 @@
+<li>
+  <p>
+    <strong>Autonomous Search & Chat Agent</strong> — 
+    <a href="https://github.com/vedraw" target="_blank">Source Code</a> | 
+    <a href="project-details.html">Full Case Study</a>
+  </p>
+  
+  <span>
+    An intelligent agentic workflow using <strong>n8n</strong> and <strong>LangChain</strong> principles. 
+    It autonomously decides when to use external search tools to provide real-time data.
+  </span>
+
+  <details style="margin-top: 10px; cursor: pointer;">
+    <summary><em>View Technical Deep Dive & Stack</em></summary>
+    <div class="project-details" style="padding: 10px; background: #f9f9f9; border-left: 3px solid #333; margin-top: 5px;">
+      
+      <strong>Project Overview</strong>
+      <p>Moves beyond a standard "wrapper" by implementing <strong>Reasoning and Acting (ReAct)</strong> logic. The system evaluates if it has enough information to answer; if not, it autonomously invokes search tools to synthesize a grounded response.</p>
+
+      <strong>Technical Stack</strong>
+      <ul>
+        <li><strong>Orchestration:</strong> n8n (Workflow Engineering)</li>
+        <li><strong>LLM Engine:</strong> OpenAI GPT-4o / GPT-3.5</li>
+        <li><strong>External Capabilities:</strong> SerpAPI (Real-time Google Search)</li>
+        <li><strong>State Management:</strong> Simple Window Memory</li>
+        <li><strong>Architecture:</strong> Agentic Workflow / Tool-Augmented Generation</li>
+      </ul>
+
+      <strong>Key Engineering Highlights</strong>
+      <ul>
+        <li><strong>Tool Dispatching:</strong> Configured to handle unstructured queries by determining tool necessity on-the-fly.</li>
+        <li><strong>Context Persistence:</strong> Integrated memory buffers for multi-turn dialogue.</li>
+        <li><strong>API Management:</strong> Optimized response parsing for cost-effective data retrieval.</li>
+      </ul>
+    </div>
+  </details>
+
+  <img src="n8n_flow.png" alt="n8n AI Agent Workflow" class="project-image" style="margin-top:10px;"/><br />
+</li>
